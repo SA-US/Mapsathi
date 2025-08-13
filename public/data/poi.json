@@ -1,0 +1,83 @@
+{
+    "delhi": [
+      {
+        "name": "India Gate",
+        "lat": 28.6129,
+        "lng": 77.2295,
+        "description": "A war memorial dedicated to soldiers of World War I and the Third Anglo-Afghan War."
+      },
+      {
+        "name": "Qutub Minar",
+        "lat": 28.5245,
+        "lng": 77.1855,
+        "description": "UNESCO World Heritage Site, the tallest brick minaret in the world."
+      },
+      {
+        "name": "Red Fort",
+        "lat": 28.6562,
+        "lng": 77.2410,
+        "description": "Historic fort and former residence of Mughal emperors."
+      }
+    ],
+    "mumbai": [
+      {
+        "name": "Gateway of India",
+        "lat": 18.922,
+        "lng": 72.8347,
+        "description": "Iconic arch monument overlooking the Arabian Sea."
+      },
+      {
+        "name": "Marine Drive",
+        "lat": 18.943,
+        "lng": 72.8238,
+        "description": "A scenic coastal road with sweeping views of Mumbai's skyline."
+      },
+      {
+        "name": "Chhatrapati Shivaji Terminus",
+        "lat": 18.9402,
+        "lng": 72.8356,
+        "description": "Victorian Gothic-style railway station and UNESCO site."
+      }
+    ],
+    "jaipur": [
+      {
+        "name": "Hawa Mahal",
+        "lat": 26.9239,
+        "lng": 75.8267,
+        "description": "Palace of Winds, famous for its intricate lattice facade."
+      },
+      {
+        "name": "Amber Fort",
+        "lat": 26.9855,
+        "lng": 75.8513,
+        "description": "Majestic fort overlooking Maota Lake."
+      },
+      {
+        "name": "City Palace",
+        "lat": 26.926,
+        "lng": 75.8235,
+        "description": "Complex of courtyards, gardens, and buildings blending Rajasthani and Mughal architecture."
+      }
+    ],
+    "varanasi": [
+      {
+        "name": "Kashi Vishwanath",
+        "lat": 25.3109,
+        "lng": 82.9735,
+        "description": "Sacred temple complex dedicated to Lord Vishwanath."
+      },
+      {
+        "name": "Dashashwamedh Ghat",
+        "lat": 25.3217,
+        "lng": 82.9873,
+        "description": "Riverfront pilgrimage site and one of the holiest ghats in Varanasi."
+      },
+      {
+        "name": "Sarnath Temple",
+        "lat": 25.3322,
+        "lng": 82.9722,
+        "description": "Ancient Buddhist monastery and UNESCO World Heritage Site."
+      }
+    ]
+  }
+  
