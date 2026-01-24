@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 3, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 11, "column": 0}, "map": {"version":3,"sources":["file:///D:/Project/Mapsathi/app/page.js"],"sourcesContent":["import React from \"react\";\r\nimport MapWithDownload from \"../components/MapWithDownload\";\r\n\r\n\r\nfunction Home() {\r\n  return (\r\n    <main className=\"p-6\">\r\n      <h1 className=\"text-2xl font-bold mb-4\">MapSathi</h1>\r\n      <MapWithDownload />\r\n    </main>\r\n  );\r\n}\r\n\r\n// ✅ Only ONE default export allowed\r\nexport default Home;\r\n\r\n"],"names":[],"mappings":";;;;;AAAA;;;;;;;;;AAIA,SAAS;IACP,qBACE,8OAAC;QAAK,WAAU;;0BACd,8OAAC;gBAAG,WAAU;0BAA0B;;;;;;0BACxC,8OAAC;;;;;;;;;;;AAGP;uCAGe","debugId":null}}]
+}

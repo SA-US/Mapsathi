@@ -21,8 +21,8 @@ export async function POST(req) {
         { status: 400 }
       );
     }
-    const saved = await prisma.contactSubmission.create({ data: parsed.data });
-    return NextResponse.json({ ok: true, id: saved.id }, { status: 201 });
+    // Database creation removed
+    return NextResponse.json({ ok: true, message: 'Contact form processed' }, { status: 201 });
   } catch (e) {
     console.error(e);
     return NextResponse.json(

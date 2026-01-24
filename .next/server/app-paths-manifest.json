@@ -1,0 +1,6 @@
+{
+  "/Pages/maps/page": "app/Pages/maps/page.js",
+  "/api/crowd/route": "app/api/crowd/route.js",
+  "/api/hazards/route": "app/api/hazards/route.js",
+  "/page": "app/page.js"
+}

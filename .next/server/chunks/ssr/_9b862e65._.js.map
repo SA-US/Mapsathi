@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 4, "column": 0}, "map": {"version":3,"sources":["file:///E:/Mapsathi/app/layout.js"],"sourcesContent":["import { Geist, Geist_Mono } from \"next/font/google\";\r\nimport \"./globals.css\";\r\nimport \"swiper/css\";\r\nimport \"swiper/css/pagination\";\r\nimport \"swiper/css/autoplay\";\r\nimport \"swiper/css/navigation\";\r\n\r\nexport const metadata = {\r\n  title: \"MapSathi — Explore maps & local guides\",\r\n  description: \"MapSathi — intuitive maps, curated routes and local travel guides.\",\r\n};\r\n\r\nexport default function RootLayout({ children }) {\r\n  return (\r\n    <html lang=\"en\" >\r\n      <body>\r\n        {children}\r\n        \r\n      </body>\r\n    </html>\r\n  );\r\n}\r\n"],"names":[],"mappings":";;;;;;;;;;;;;AAOO,MAAM,WAAW;IACtB,OAAO;IACP,aAAa;AACf;AAEe,SAAS,WAAW,EAAE,QAAQ,EAAE;IAC7C,qBACE,8OAAC;QAAK,MAAK;kBACT,cAAA,8OAAC;sBACE;;;;;;;;;;;AAKT","debugId":null}},
+    {"offset": {"line": 41, "column": 0}, "map": {"version":3,"sources":["file:///E:/Mapsathi/node_modules/next/src/server/route-modules/app-page/vendored/rsc/react-jsx-dev-runtime.ts"],"sourcesContent":["module.exports = (\n  require('../../module.compiled') as typeof import('../../module.compiled')\n).vendored['react-rsc']!.ReactJsxDevRuntime\n"],"names":["module","exports","require","vendored","ReactJsxDevRuntime"],"mappings":"AAAAA,OAAOC,OAAO,GACZC,QAAQ,4HACRC,QAAQ,CAAC,YAAY,CAAEC,kBAAkB","ignoreList":[0],"debugId":null}}]
+}

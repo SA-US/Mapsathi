@@ -6,8 +6,8 @@ import "swiper/css/autoplay";
 import "swiper/css/navigation";
 
 export const metadata = {
-  title: "MapsArthi — Explore maps & local guides",
-  description: "MapsArthi — intuitive maps, curated routes and local travel guides.",
+  title: "MapSathi — Explore maps & local guides",
+  description: "MapSathi — intuitive maps, curated routes and local travel guides.",
 };
 
 export default function RootLayout({ children }) {

@@ -1,0 +1,10 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/api/contact/route": "/api/contact",
+  "/Pages/aboutus/page": "/Pages/aboutus",
+  "/Pages/keyattractions/page": "/Pages/keyattractions",
+  "/Pages/maps/page": "/Pages/maps",
+  "/page": "/",
+  "/Pages/packages/page": "/Pages/packages",
+  "/Pages/ContactForm/page": "/Pages/ContactForm"
+}
