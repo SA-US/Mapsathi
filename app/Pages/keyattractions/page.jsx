@@ -9,24 +9,24 @@ import { Card, CardContent } from '@/components/ui/card';
 export default function KeyAttractionsPage() {
   const attractions = [
     {
-      name: 'Sunset Point',
-      img: '/images/4.png',
-      desc: 'Breathtaking views of the valley at dusk.',
+      name: 'Udaipur',
+      img: '/images/9.jpg',
+      desc: 'The City of Lakes, shimmering with romance and royalty.',
     },
     {
-      name: 'Crystal Lake',
-      img: '/images/5.png',
-      desc: 'Clear waters surrounded by lush greenery.',
+      name: 'Delhi',
+      img: '/images/10.jpg',
+      desc: 'A city of empires, culture, and endless contrasts.',
     },
     {
-      name: 'Old Town Market',
-      img: '/images/6.png',
-      desc: 'A bustling spot for local crafts and delicacies.',
+      name: 'Jaipur',
+      img: '/images/11.jpg',
+      desc: 'A royal blend of heritage, handicrafts, and hues.',
     },
     {
-      name: 'Skyline View Deck',
-      img: '/images/7.png',
-      desc: 'Panoramic sights of the city lights at night.',
+      name: 'Mumbai',
+      img: '/images/12.jpg',
+      desc: 'The city that never sleeps, where dreams meet the sea.',
     },
   ];
 

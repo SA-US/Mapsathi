@@ -13,7 +13,7 @@ const HeroSection = () => {
       {/* Content */}
       <div className="relative z-10 text-center px-6 animate-fadeIn">
         <h1 className="text-white font-bold text-4xl md:text-6xl font-['Montserrat'] mb-4 drop-shadow-lg">
-          Welcome to <span className="text-blue-400">MapSarthi</span>
+          Welcome to <span className="text-blue-400">MapSathi</span>
         </h1>
         <p className="text-gray-200 text-lg md:text-2xl max-w-2xl mx-auto mb-8 drop-shadow-md">
           Explore the world with intuitive mapping, local insights, and immersive travel experiences.

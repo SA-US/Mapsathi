@@ -23,11 +23,6 @@ export default function CTABanner() {
         </div>
         <div className="flex gap-3">
           <Button
-            className="bg-white text-sky-600 hover:bg-white/90"
-          >
-            Create Map
-          </Button>
-          <Button
             variant="outline"
             className="bg-white text-sky-600 hover:bg-white/90"
             onClick={() => router.push('/Pages/ContactForm')}
