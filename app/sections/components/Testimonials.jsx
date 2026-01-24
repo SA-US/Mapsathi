@@ -4,7 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 
 const quotes = [
-  { name: 'Arjun', text: 'MapsArthi helped plan our weekend trip — smooth and beautiful maps.' },
+  { name: 'Arjun', text: 'Mapsathi helped plan our weekend trip — smooth and beautiful maps.' },
   { name: 'Leena', text: 'Local tips were spot on. Loved the curated stops!' },
   { name: 'S.K.', text: 'Easy to use and the UI looks amazing on mobile.' },
 ];

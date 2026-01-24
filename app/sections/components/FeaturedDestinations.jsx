@@ -5,9 +5,9 @@ import { motion } from 'framer-motion';
 
 const items = [
   { title: 'Riverside Escapes', image: '/images/4.png', tag: 'Top' },
-  { title: 'Historic Trails', image: '/images/5.png', tag: 'New' },
+  { title: 'Historic Trails', image: '/images/7.png', tag: 'New' },
   { title: 'Coastal Wonders', image: '/images/6.png', tag: 'Popular' },
-  { title: 'Mountain Routes', image: '/images/7.png', tag: 'Adventure' },
+  { title: 'Mountain Routes', image: '/images/5.png', tag: 'Adventure' },
 ];
 
 export default function FeaturedDestinations() {
