@@ -20,3 +20,97 @@ model ContactSubmission {
   source  String?    // e.g., "homepage-hero", "contact-page"
   resolved Boolean   @default(false)
 }
+
+// User model for review system
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  avatar    String?
+  verified  Boolean  @default(false)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  reviews Review[]
+  helpfulness ReviewHelpfulness[]
+  verificationLogs ReviewVerificationLog[]
+}
+
+// Review categories for different entity types
+model ReviewCategory {
+  id         String   @id
+  name       String
+  entityType String   // "poi", "restaurant", "hotel", "emergency_service"
+  weight     Float    @default(1.0)
+  
+  reviewRatings ReviewRating[]
+  
+  @@map("review_categories")
+}
+
+// Main reviews table
+model Review {
+  id          String   @id @default(cuid())
+  userId      String
+  entityType  String   // "poi", "restaurant", "hotel", "emergency_service"
+  entityId    String
+  rating      Float    // 1.0 to 5.0
+  title       String?
+  content     String?
+  photos      String?  // JSON string array of photo URLs for SQLite compatibility
+  helpfulCount Int      @default(0)
+  verified    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  isDeleted   Boolean  @default(false)
+
+  user         User           @relation(fields: [userId], references: [id])
+  ratings      ReviewRating[]
+  helpfulness  ReviewHelpfulness[]
+  verificationLogs ReviewVerificationLog[]
+
+  @@map("reviews")
+}
+
+// Category-specific ratings
+model ReviewRating {
+  id         String @id @default(cuid())
+  reviewId   String
+  categoryId String
+  rating     Float  // 1.0 to 5.0
+
+  review   Review         @relation(fields: [reviewId], references: [id])
+  category ReviewCategory @relation(fields: [categoryId], references: [id])
+
+  @@map("review_ratings")
+}
+
+// Review helpfulness voting
+model ReviewHelpfulness {
+  id        String   @id @default(cuid())
+  reviewId  String
+  userId    String
+  isHelpful Boolean
+  createdAt DateTime @default(now())
+
+  review Review @relation(fields: [reviewId], references: [id])
+  user   User   @relation(fields: [userId], references: [id])
+
+  @@unique([reviewId, userId])
+  @@map("review_helpfulness")
+}
+
+// Review verification logs for audit trail
+model ReviewVerificationLog {
+  id       String   @id @default(cuid())
+  reviewId String
+  adminId  String
+  action   String   // "verified" or "unverified"
+  reason   String?
+  createdAt DateTime @default(now())
+
+  review Review @relation(fields: [reviewId], references: [id])
+  admin  User   @relation(fields: [adminId], references: [id])
+
+  @@map("review_verification_logs")
+}
