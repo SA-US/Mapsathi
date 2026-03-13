@@ -56,6 +56,56 @@ const generateDynamicAlerts = (lat, lon) => {
   const timeOfDay = new Date().getHours();
   const random = Math.random();
 
+  // Generate weather-based alerts with temperature data
+  const weather = generateMockWeather(lat, lon);
+  
+  // Temperature-based alerts
+  if (weather.temperature > 35) {
+    alerts.push({
+      id: `heat-${Date.now()}`,
+      type: 'weather',
+      severity: 'high',
+      title: 'Extreme Heat Warning',
+      message: `Temperature: ${weather.temperature}°C. Stay hydrated and avoid prolonged sun exposure.`,
+      icon: 'thermometer',
+      timestamp: new Date().toISOString(),
+      color: 'bg-red-500',
+      temperature: weather.temperature,
+      precautions: ['Drink plenty of water', 'Avoid outdoor activities during peak hours', 'Wear light clothing']
+    });
+  }
+
+  if (weather.temperature < 5) {
+    alerts.push({
+      id: `cold-${Date.now()}`,
+      type: 'weather',
+      severity: 'medium',
+      title: 'Cold Weather Alert',
+      message: `Temperature: ${weather.temperature}°C. Wear warm clothing and be cautious of icy conditions.`,
+      icon: 'alert',
+      timestamp: new Date().toISOString(),
+      color: 'bg-blue-500',
+      temperature: weather.temperature,
+      precautions: ['Wear layers of clothing', 'Keep emergency supplies in vehicle', 'Check on elderly neighbors']
+    });
+  }
+
+  // AQI-based alerts
+  if (weather.aqi > 150) {
+    alerts.push({
+      id: `pollution-${Date.now()}`,
+      type: 'pollution',
+      severity: 'high',
+      title: 'Poor Air Quality Alert',
+      message: `AQI: ${weather.aqi}. Poor air quality detected. Limit outdoor activities.`,
+      icon: 'alert',
+      timestamp: new Date().toISOString(),
+      color: 'bg-orange-500',
+      aqi: weather.aqi,
+      precautions: ['Wear N95 masks when outdoors', 'Use air purifiers indoors', 'Avoid strenuous outdoor activities']
+    });
+  }
+
   // Time-based alerts
   if (timeOfDay >= 22 || timeOfDay <= 5) {
     if (random > 0.7) {
@@ -67,7 +117,8 @@ const generateDynamicAlerts = (lat, lon) => {
         message: 'Stay in well-lit areas and avoid isolated locations at night.',
         icon: 'shield',
         timestamp: new Date().toISOString(),
-        color: 'bg-purple-500'
+        color: 'bg-purple-500',
+        precautions: ['Travel in groups when possible', 'Keep phone charged', 'Share your location with someone']
       });
     }
   }
@@ -82,7 +133,8 @@ const generateDynamicAlerts = (lat, lon) => {
       message: 'Large public gathering nearby. Expect crowds and traffic delays.',
       icon: 'info',
       timestamp: new Date().toISOString(),
-      color: 'bg-blue-500'
+      color: 'bg-blue-500',
+      precautions: ['Plan alternate routes', 'Allow extra travel time', 'Be aware of surroundings']
     });
   }
 
@@ -97,17 +149,20 @@ const generateDynamicAlerts = (lat, lon) => {
         message: 'Construction work ahead. Drive carefully and follow detours.',
         icon: 'alert',
         timestamp: new Date().toISOString(),
-        color: 'bg-yellow-500'
+        color: 'bg-yellow-500',
+        precautions: ['Follow traffic signs', 'Expect delays', 'Use alternate routes if possible']
       },
       {
         id: `weather-${Date.now()}`,
         type: 'weather',
         severity: 'low',
         title: 'Weather Update',
-        message: 'Light rain expected. Carry an umbrella if traveling.',
+        message: `Weather condition: ${weather.condition}. Plan accordingly.`,
         icon: 'cloud',
         timestamp: new Date().toISOString(),
-        color: 'bg-gray-500'
+        color: 'bg-gray-500',
+        weather: weather.condition,
+        precautions: getWeatherPrecautions(weather.condition)
       }
     ];
     
@@ -117,12 +172,38 @@ const generateDynamicAlerts = (lat, lon) => {
   return alerts;
 };
 
+const generateMockWeather = (lat, lon) => {
+  // Generate more realistic weather based on location
+  const baseTemp = 25 + (lat > 20 ? -5 : 5); // Northern latitudes cooler
+  const tempVariation = Math.sin(Date.now() / 10000000) * 10; // Time-based variation
+  
+  return {
+    temperature: Math.round(baseTemp + tempVariation + Math.random() * 10),
+    humidity: Math.round(Math.random() * 40 + 40),
+    windSpeed: Math.round(Math.random() * 20 + 5),
+    condition: ['clear', 'cloudy', 'rainy', 'stormy', 'foggy'][Math.floor(Math.random() * 5)],
+    aqi: Math.round(Math.random() * 150 + 50),
+    location: { lat, lon }
+  };
+};
+
+const getWeatherPrecautions = (condition) => {
+  const precautions = {
+    'clear': ['Apply sunscreen', 'Stay hydrated', 'Wear sunglasses'],
+    'cloudy': ['Carry light jacket', 'Stay updated on weather changes'],
+    'rainy': ['Carry umbrella', 'Drive carefully', 'Avoid waterlogged areas'],
+    'stormy': ['Seek shelter', 'Avoid outdoor activities', 'Stay away from windows'],
+    'foggy': ['Use fog lights', 'Drive slowly', 'Increase following distance']
+  };
+  return precautions[condition] || ['Stay weather aware'];
+};
+
 export async function GET(req) {
   try {
     const { searchParams } = new URL(req.url);
     const lat = parseFloat(searchParams.get('lat'));
     const lon = parseFloat(searchParams.get('lon'));
-    const city = searchParams.get('city')?.toLowerCase();
+    const city = searchParams.get('city')?.toLowerCase() || 'unknown';
 
     if (!isFinite(lat) || !isFinite(lon)) {
       return NextResponse.json(
@@ -133,8 +214,8 @@ export async function GET(req) {
 
     let alerts = [];
 
-    // Add city-specific static alerts
-    if (city && mockSafetyAlerts[city]) {
+    // Add city-specific static alerts only if city is valid and known
+    if (city && city !== 'unknown' && mockSafetyAlerts[city]) {
       alerts = [...mockSafetyAlerts[city]];
     }
 
@@ -150,7 +231,9 @@ export async function GET(req) {
     alerts = alerts.map(alert => ({
       ...alert,
       location: { lat, lon, city: city || 'unknown' },
-      distance: calculateDistanceFromCenter(lat, lon)
+      distance: calculateDistanceFromCenter(lat, lon),
+      // Add weather data for all alerts
+      weather: generateMockWeather(lat, lon)
     }));
 
     return NextResponse.json({
@@ -158,7 +241,8 @@ export async function GET(req) {
       alerts,
       total: alerts.length,
       location: { lat, lon, city },
-      timestamp: new Date().toISOString()
+      timestamp: new Date().toISOString(),
+      weather: generateMockWeather(lat, lon)
     });
 
   } catch (error) {

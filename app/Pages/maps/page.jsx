@@ -1,5 +1,6 @@
 'use client';
 import { useSearchParams } from 'next/navigation';
+import { useState, useEffect } from 'react';
 import dynamic from 'next/dynamic';
 import Navbar from '@/app/sections/navbar';
 import Footer from '@/app/sections/footer';
@@ -13,6 +14,31 @@ function MapsPageContent() {
   const searchParams = useSearchParams();
   const cityParam = searchParams.get('city') || 'delhi';
   const cityData = getCityData(cityParam);
+  const [searchLocation, setSearchLocation] = useState(null);
+
+  // Listen for search location updates from ClientSideMap
+  useEffect(() => {
+    const handleSearchLocation = (event) => {
+      setSearchLocation(event.detail);
+    };
+
+    window.addEventListener('searchLocationUpdate', handleSearchLocation);
+    return () => window.removeEventListener('searchLocationUpdate', handleSearchLocation);
+  }, []);
+
+  const getDisplayTitle = () => {
+    if (searchLocation && searchLocation.name) {
+      return `${searchLocation.name} Map`;
+    }
+    return `${cityData?.name || 'City'} Map`;
+  };
+
+  const getDisplayDescription = () => {
+    if (searchLocation && searchLocation.name) {
+      return `Explore ${searchLocation.name} with interactive reviews and ratings.`;
+    }
+    return cityData?.description || 'Explore this beautiful city with interactive reviews and ratings.';
+  };
 
   if (!cityData) {
     return (
@@ -47,10 +73,10 @@ function MapsPageContent() {
             className="mb-6"
           >
             <h1 className="text-3xl font-bold text-sky-700">
-              {cityData?.name || 'City'} Maps
+              {getDisplayTitle()}
             </h1>
             <p className="text-gray-600 mt-2">
-              Explore {cityData?.description || 'this beautiful city'} with interactive reviews and ratings.
+              {getDisplayDescription()}
             </p>
           </motion.header>
 
