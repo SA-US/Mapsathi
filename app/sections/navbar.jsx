@@ -4,8 +4,8 @@ import "swiper/css"; // Only if your Navbar needs Swiper styling (optional)
 // Define the nav items array
 const navItems = [
   { label: "Home", href: "/" }, // In Next.js, homepage is "/"
-  { label: "Packages", href: "/Pages/packages" },
   { label: "Maps", href: "/Pages/maps" },
+  { label: "Trip", href: "/Pages/trip-planner" },
   { label: "Key Attraction", href: "/Pages/keyattractions" },
   { label: "About Us", href: "/Pages/aboutus" },
 ];

@@ -23,17 +23,19 @@ model ContactSubmission {
 
 // User model for review system
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String?
-  avatar    String?
-  verified  Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String?
+  avatar      String?
+  preferences String?  // JSON string for user preferences
+  verified    Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
-  reviews Review[]
+  reviews     Review[]
   helpfulness ReviewHelpfulness[]
   verificationLogs ReviewVerificationLog[]
+  itineraries Itinerary[]
 }
 
 // Review categories for different entity types
@@ -113,4 +115,73 @@ model ReviewVerificationLog {
   admin  User   @relation(fields: [adminId], references: [id])
 
   @@map("review_verification_logs")
+}
+
+// Destination model for travel locations
+model Destination {
+  id              String   @id
+  name            String
+  state           String
+  country         String
+  description     String
+  bestTimeToVisit String
+  averageDuration String
+  coordinates     String   // JSON string for coordinates [lat, lng]
+  popularFor      String   // JSON string array of popular categories
+  budget          String   // JSON string for budget ranges
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  activities Activity[]
+  itineraries Itinerary[]
+
+  @@map("destinations")
+}
+
+// Activity model for things to do at destinations
+model Activity {
+  id           String   @id
+  destinationId String
+  name         String
+  category     String   // "sightseeing", "dining", "shopping", "culture", "adventure", "nature", etc.
+  description  String
+  duration     String
+  cost         Int      // Cost in rupees
+  timeSlots    String   // JSON string array of available time slots
+  highlights   String   // JSON string array of activity highlights
+  coordinates  String   // JSON string for coordinates [lat, lng]
+  rating       Float    // 1.0 to 5.0
+  tips         String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  destination Destination @relation(fields: [destinationId], references: [id])
+
+  @@map("activities")
+}
+
+// Itinerary model for trip plans
+model Itinerary {
+  id            String   @id
+  destinationId String
+  userId        String?  // Optional user ID for user-created itineraries
+  duration      String
+  travelers     String
+  budget        String
+  interests     String   // JSON string array of interests
+  title         String
+  description   String
+  days          String   // JSON string of days array
+  accommodation  String   // JSON string of accommodation details
+  transport     String   // JSON string of transport details
+  totalCost     Int      // Total cost in rupees
+  isSample      Boolean  @default(false) // Flag for sample itineraries
+  isPublic      Boolean  @default(true) // Whether itinerary is publicly visible
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  destination Destination @relation(fields: [destinationId], references: [id])
+  user        User?       @relation(fields: [userId], references: [id])
+
+  @@map("itineraries")
 }
