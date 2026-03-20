@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, Polyline } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import 'leaflet-defaulticon-compatibility';
@@ -105,7 +105,7 @@ export default function ClientSideMap({ cityData }) {
       const qs = (lat, lon, r) => `lat=${encodeURIComponent(lat)}&lon=${encodeURIComponent(lon)}&r=${encodeURIComponent(r)}`;
       const [hzRes, crRes] = await Promise.all([
         fetch(`/api/hazards?${qs(routeData.to.lat, routeData.to.lon, destinationRadius)}`),
-        fetch(`/api/crowd?${qs(routeData.to.lat, routeData.to.lon, destinationRadius)}`
+        fetch(`/api/crowd?${qs(routeData.to.lat, routeData.to.lon, destinationRadius)}`)
       ]);
       
       if (routeReqIdRef.current !== reqId) return;
@@ -116,7 +116,7 @@ export default function ClientSideMap({ cityData }) {
       }
       if (crRes.ok) {
         const cr = await crRes.json();
-        if (cr && crz.ok && Array.isArray(cr.items)) setCrowdMarkers(cr.items);
+        if (cr && cr.ok && Array.isArray(cr.items)) setCrowdMarkers(cr.items);
       }
     } catch (_) {}
 
@@ -333,7 +333,7 @@ export default function ClientSideMap({ cityData }) {
 
   // Custom components for map controls
   const LocationControl = ({ onCurrentLocationFound }) => {
-    const map = L.map;
+    const map = useMap();
     
     useEffect(() => {
       const control = L.control({ position: 'topleft' });
@@ -354,13 +354,13 @@ export default function ClientSideMap({ cityData }) {
         return div;
       };
       control.addTo(map);
-    }, []);
+    }, [map]);
 
     return null;
   };
 
   const SearchControl = ({ onLocationFound, onGetDirections, currentLocation }) => {
-    const map = L.map;
+    const map = useMap();
     const [searchInput, setSearchInput] = useState('');
 
     const performSearch = async (query) => {
@@ -422,13 +422,13 @@ export default function ClientSideMap({ cityData }) {
         return div;
       };
       control.addTo(map);
-    }, []);
+    }, [map, currentLocation, onGetDirections, onLocationFound]);
 
     return null;
   };
 
   const OfflineControl = ({ onOfflineToggle, onPrefetchZoomRange, autoDownloadMaps, setAutoDownloadMaps }) => {
-    const map = L.map;
+    const map = useMap();
     const [isOffline, setIsOffline] = useState(false);
     const [progress, setProgress] = useState(null);
 
@@ -562,7 +562,7 @@ export default function ClientSideMap({ cityData }) {
   };
 
   const QueryControl = ({ onAreaPicked }) => {
-    const map = L.map;
+    const map = useMap();
     
     useEffect(() => {
       const control = L.control({ position: 'topright' });
@@ -579,7 +579,7 @@ export default function ClientSideMap({ cityData }) {
         return div;
       };
       control.addTo(map);
-    }, []);
+    }, [map]);
 
     return null;
   };
